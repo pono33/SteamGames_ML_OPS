@@ -1,4 +1,4 @@
-from fastapi import FastAPI, HTTPException, HTMLResponse
+from fastapi import FastAPI
 
 # Import your functions from functions.py
 from functions import PlayTimeGenre, UserForGenre, UsersRecommend, UsersWorstDeveloper, sentiment_analysis, game_recommendations
@@ -6,7 +6,7 @@ from functions import PlayTimeGenre, UserForGenre, UsersRecommend, UsersWorstDev
 app = FastAPI()
 
 # Index
-@app.get("/", response_class=HTMLResponse)
+@app.get("/")
 async def index():
     template = """
     <!DOCTYPE html>
@@ -36,7 +36,7 @@ async def index():
         </body>
     </html>
     """
-    return HTMLResponse(content=template)
+    return template
 
 # API endpoints
 
