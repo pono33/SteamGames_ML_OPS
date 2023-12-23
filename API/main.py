@@ -32,7 +32,7 @@ async def index():
         </head>
         <body>
             <h1>Steam Platform Game Query API</h1>
-            <p>This tool that can be used by game developers to improve their games, by game publishers to track their sales, and by gamers to find new games to play.<p>
+            <p>This tool that can be used by game developers to improve their games, by game publishers to track their sales, and by gamers to find new games to play.</p>
         </body>
     </html>
     """
