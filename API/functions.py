@@ -6,7 +6,7 @@ from sklearn.neighbors import NearestNeighbors
 from sklearn.pipeline import Pipeline
 
 # Datasets import
-from data import playtime_genre, users_reviews, df_games
+#from data import playtime_genre, users_reviews, df_games
 
 # Model import
 pipeline = joblib.load('recommendation_model.joblib')
