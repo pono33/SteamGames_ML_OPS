@@ -1,9 +1,6 @@
 from fastapi import FastAPI, HTTPException
 from fastapi.responses import HTMLResponse
 
-# Datasets import
-from data import playtime_genre, users_reviews, df_games
-
 # Import your functions from functions.py
 from functions import PlayTimeGenre, UserForGenre, UsersRecommend, UsersWorstDeveloper, sentiment_analysis, game_recommendations
 
