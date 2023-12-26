@@ -21,7 +21,7 @@ def PlayTimeGenre( genero : str ):
         genero: The genre to search for (str).
 
     Returns:
-        A dictionary with information about the genre and the yearin wich was most played.
+        A dictionary with information about the genre and the year in wich was most played.
     """
     
     # Ensure proper data types
@@ -35,7 +35,7 @@ def PlayTimeGenre( genero : str ):
     # Check for empty results
     if not filtered_playtime.empty:
         # Find year with most playtime
-        max_playtime_year = filtered_playtime.groupby("Año")["Horas"].sum().idxmax()
+        max_playtime_year = filtered_playtime.groupby("release_year")["playtime_forever"].sum().idxmax()
 
         # Build and return dictionary
         return {
@@ -67,12 +67,12 @@ def UserForGenre(genero: str):
     # Check for empty results
     if not filtered_playtime.empty:
         # Find user with most playtime
-        max_playtime_user = filtered_playtime.groupby("user_id")["Horas"].sum().idxmax()
+        max_playtime_user = filtered_playtime.groupby("user_id")["playtime_forever"].sum().idxmax()
 
         # Get year-wise playtime accumulation
         yearly_hour_accumulation = (
             filtered_playtime[filtered_playtime["user_id"] == max_playtime_user]
-            .groupby("Año")["Horas"]
+            .groupby("release_year")["playtime_forever"]
             .sum()
             .reset_index()
             .to_dict(orient="records")
@@ -182,7 +182,7 @@ def sentiment_analysis( empresa_desarrolladora : str ):
         return f"No se encontro la empresa desarrolladora ingresada: '{empresa_desarrolladora}'"
     
 
-def game_recommendations(item_id):
+def game_recommendations( item_id : int ):
     '''
     This function helps users discover games that are similar to a given game (specified by item_id)
     by employing a K-nearest neighbors approach after transforming the input data.
