@@ -1,4 +1,5 @@
 from fastapi import FastAPI
+from fastapi.responses import HTMLResponse
 
 # Import your functions from functions.py
 from functions import PlayTimeGenre, UserForGenre, UsersRecommend, UsersWorstDeveloper, sentiment_analysis, game_recommendations
@@ -6,7 +7,7 @@ from functions import PlayTimeGenre, UserForGenre, UsersRecommend, UsersWorstDev
 app = FastAPI()
 
 # Index
-@app.get("/")
+@app.get("/", response_class=HTMLResponse)
 async def index():
     template = """
     <!DOCTYPE html>
@@ -36,7 +37,7 @@ async def index():
         </body>
     </html>
     """
-    return template
+    return HTMLResponse(content=template)
 
 # API endpoints
 
