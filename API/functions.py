@@ -103,7 +103,7 @@ def UsersRecommend( año : int ):
         raise TypeError(f"Expected 'año' to be an integer, got {type(año)}.")
 
     # Filter the users_reviews DataFrame for the given year, where the recommendations are True and the sentiment_analysis is 1 or 2
-    filtered_reviews = users_reviews.query("Año == @año and recommend and sentiment_analysis in [1, 2]")
+    filtered_reviews = users_reviews.query("Year == @año and recommend and sentiment_analysis in [1, 2]")
     
     # Check for empty results
     if not filtered_reviews.empty:
@@ -133,7 +133,7 @@ def UsersWorstDeveloper( año : int ):
         raise TypeError(f"Expected 'año' to be an integer, got {type(año)}.")
 
     # Filter the users_reviews DataFrame for the given year, where the recommendations are False and the sentiment_analysis is 0
-    filtered_developers = users_reviews.query("Año == @año and recommend == False and sentiment_analysis == 0")
+    filtered_developers = users_reviews.query("Year == @año and recommend == False and sentiment_analysis == 0")
     
     # Check for empty results
     if not filtered_developers.empty:
