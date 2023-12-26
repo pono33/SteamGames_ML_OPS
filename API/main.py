@@ -1,4 +1,4 @@
-from fastapi import FastAPI
+from fastapi import FastAPI, HTTPException
 from fastapi.responses import HTMLResponse
 
 # Datasets import
@@ -36,7 +36,7 @@ async def index():
         </head>
         <body>
             <h1>Steam Platform Game Query API</h1>
-            <p>This tool that can be used by game developers to improve their games, by game publishers to track their sales, and by gamers to find new games to play.</p>
+            <p>This tool that can be used by game developers to improve their games, by game publishers to track their sales, and by gamers to find new games to play.<p>
         </body>
     </html>
     """
@@ -45,7 +45,7 @@ async def index():
 # API endpoints
 
 @app.get("/playtime_genre/{genero}")
-def read_playtime_genre(genero: str):
+async def read_playtime_genre(genero: str):
     try:
         result = PlayTimeGenre(genero)
         return result
@@ -53,7 +53,7 @@ def read_playtime_genre(genero: str):
         raise HTTPException(status_code=400, detail=str(e))
 
 @app.get("/user_for_genre/{genero}")
-def read_user_for_genre(genero: str):
+async def read_user_for_genre(genero: str):
     try:
         result = UserForGenre(genero)
         return result
@@ -61,7 +61,7 @@ def read_user_for_genre(genero: str):
         raise HTTPException(status_code=400, detail=str(e))
 
 @app.get("/users_recommend/{año}")
-def read_users_recommend(año: int):
+async def read_users_recommend(año: int):
     try:
         result = UsersRecommend(año)
         return result
@@ -69,7 +69,7 @@ def read_users_recommend(año: int):
         raise HTTPException(status_code=400, detail=str(e))
 
 @app.get("/users_worst_developer/{año}")
-def read_users_worst_developer(año: int):
+async def read_users_worst_developer(año: int):
     try:
         result = UsersWorstDeveloper(año)
         return result
@@ -77,7 +77,7 @@ def read_users_worst_developer(año: int):
         raise HTTPException(status_code=400, detail=str(e))
 
 @app.get("/sentiment_analysis/{empresa_desarrolladora}")
-def read_sentiment_analysis(empresa_desarrolladora: str):
+async def read_sentiment_analysis(empresa_desarrolladora: str):
     try:
         result = sentiment_analysis(empresa_desarrolladora)
         return result
@@ -85,7 +85,7 @@ def read_sentiment_analysis(empresa_desarrolladora: str):
         raise HTTPException(status_code=400, detail=str(e))
 
 @app.get("/game_recommendations/{item_id}")
-def read_game_recommendations(item_id: int):
+async def read_game_recommendations(item_id: int):
     try:
         result = game_recommendations(item_id)
         return result
