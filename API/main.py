@@ -41,18 +41,18 @@ async def index():
 
 # API endpoints
 
-@app.get("/playtime_genre/{genero}")
-async def read_playtime_genre(genero: str):
+@app.get("/playtime_genre/{genre}")
+async def read_playtime_genre(genre: str):
     try:
-        result = PlayTimeGenre(genero)
+        result = PlayTimeGenre(genre)
         return result
     except TypeError as e:
         raise HTTPException(status_code=400, detail=str(e))
 
-@app.get("/user_for_genre/{genero}")
-async def read_user_for_genre(genero: str):
+@app.get("/user_for_genre/{genre}")
+async def read_user_for_genre(genre: str):
     try:
-        result = UserForGenre(genero)
+        result = UserForGenre(genre)
         return result
     except TypeError as e:
         raise HTTPException(status_code=400, detail=str(e))
