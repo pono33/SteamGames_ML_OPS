@@ -57,26 +57,26 @@ async def read_user_for_genre(genero: str):
     except TypeError as e:
         raise HTTPException(status_code=400, detail=str(e))
 
-@app.get("/users_recommend/{año}")
-async def read_users_recommend(año: int):
+@app.get("/users_recommend/{year}")
+async def read_users_recommend(year: int):
     try:
-        result = UsersRecommend(año)
+        result = UsersRecommend(year)
         return result
     except TypeError as e:
         raise HTTPException(status_code=400, detail=str(e))
 
-@app.get("/users_worst_developer/{año}")
-async def read_users_worst_developer(año: int):
+@app.get("/users_worst_developer/{year}")
+async def read_users_worst_developer(year: int):
     try:
-        result = UsersWorstDeveloper(año)
+        result = UsersWorstDeveloper(year)
         return result
     except TypeError as e:
         raise HTTPException(status_code=400, detail=str(e))
 
-@app.get("/sentiment_analysis/{empresa_desarrolladora}")
-async def read_sentiment_analysis(empresa_desarrolladora: str):
+@app.get("/sentiment_analysis/{developer_company}")
+async def read_sentiment_analysis(developer_company: str):
     try:
-        result = sentiment_analysis(empresa_desarrolladora)
+        result = sentiment_analysis(developer_company)
         return result
     except TypeError as e:
         raise HTTPException(status_code=400, detail=str(e))

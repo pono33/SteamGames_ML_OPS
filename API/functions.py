@@ -13,66 +13,64 @@ pipeline = joblib.load('recommendation_model.joblib')
 
 # API Functions:    
 
-def PlayTimeGenre( genero : str ):
+def PlayTimeGenre( genre : str ):
     """
     Finds the year with the most hours played for a specific genre, ignoring case and checking data types.
 
     Args:
-        genero: The genre to search for (str).
+        genre: The genre to search for (str).
 
     Returns:
         A dictionary with information about the genre and the year in wich was most played.
     """
     
     # Ensure proper data types
-    if not isinstance(genero, str):
-        raise TypeError(f"Expected 'genero' to be a string, got {type(genero)}.")
+    if not isinstance(genre, str):
+        raise TypeError(f"Expected 'genre' to be a string, got {type(genre)}.")
 
     # Case-insensitive genre search
-    genre = genero.lower()
-    filtered_playtime = playtime_genre[playtime_genre["genre"].str.lower() == genre]
+    filtered_playtime = playtime_genre[playtime_genre["genre"].str.lower() == genre.lower()]
 
     # Check for empty results
     if not filtered_playtime.empty:
         # Find year with most playtime
-        max_playtime_year = filtered_playtime.groupby("release_year")["playtime_forever"].sum().idxmax()
+        max_playtime_year = filtered_playtime.groupby("year")["playtime"].sum().idxmax()
 
         # Build and return dictionary
         return {
-            f"Año de lanzamiento con más horas jugadas para Género {genero.capitalize()}": max_playtime_year
+            f"Release year with the most hours played for Genre {genre.capitalize()}": max_playtime_year
         }
     else:
-        return f"No se encontró ningún Año en el que se haya jugado el Género '{genero.capitalize()}'"
+        return f"No Year was found in which the Genre '{genre.capitalize()}' was played"
     
 
-def UserForGenre(genero: str):
+def UserForGenre( genre : str ):
     """
     Finds the user with the most hours played for a specific genre, ignoring case and checking data types.
 
     Args:
-        genero: The genre to search for (str).
+        genre: The genre to search for (str).
 
     Returns:
         A dictionary with information about the user and their playtime.
     """
 
     # Ensure proper data types
-    if not isinstance(genero, str):
-        raise TypeError(f"Expected 'genero' to be a string, got {type(genero)}.")
+    if not isinstance(genre, str):
+        raise TypeError(f"Expected 'genre' to be a string, got {type(genre)}.")
 
     # Case-insensitive genre search
-    genre = genero.lower()
-    filtered_playtime = playtime_genre[playtime_genre["genre"].str.lower() == genre]
+    filtered_playtime = playtime_genre[playtime_genre["genre"].str.lower() == genre.lower()]
 
     # Check for empty results
     if not filtered_playtime.empty:
         # Find user with most playtime
-        max_playtime_user = filtered_playtime.groupby("user_id")["playtime_forever"].sum().idxmax()
+        max_playtime_user = filtered_playtime.groupby("user_id")["playtime"].sum().idxmax()
 
         # Get year-wise playtime accumulation
         yearly_hour_accumulation = (
             filtered_playtime[filtered_playtime["user_id"] == max_playtime_user]
-            .groupby("release_year")["playtime_forever"]
+            .groupby("year")["playtime"]
             .sum()
             .reset_index()
             .to_dict(orient="records")
@@ -80,14 +78,14 @@ def UserForGenre(genero: str):
 
         # Build and return dictionary
         return {
-            f"Usuario con más horas jugadas para Género {genero.capitalize()}": max_playtime_user,
-            "Horas jugadas": yearly_hour_accumulation,
+            f"User with highiest playtime hours {genre.capitalize()}": max_playtime_user,
+            "Playtime Hours": yearly_hour_accumulation,
         }
     else:
-        return f"No se encontró ningún usuario que haya jugado al Género '{genero.capitalize()}'"
+        return f"No Year was found in which the Genre '{genre.capitalize()}' was played"
     
     
-def UsersRecommend( año : int ):
+def UsersRecommend( year : int ):
     """
     Identifies the top 3 recommended games for a given year.
 
@@ -99,11 +97,11 @@ def UsersRecommend( año : int ):
     """
 
     # Ensure proper data types
-    if not isinstance(año, int):
-        raise TypeError(f"Expected 'año' to be an integer, got {type(año)}.")
+    if not isinstance(year, int):
+        raise TypeError(f"Expected 'year' to be an integer, got {type(year)}.")
 
     # Filter the users_reviews DataFrame for the given year, where the recommendations are True and the sentiment_analysis is 1 or 2
-    filtered_reviews = users_reviews.query("Year == @año and recommend and sentiment_analysis in [1, 2]")
+    filtered_reviews = users_reviews.query("year == @year and recommend and sentiment_analysis in [1, 2]")
     
     # Check for empty results
     if not filtered_reviews.empty:
@@ -111,13 +109,13 @@ def UsersRecommend( año : int ):
         top_games = filtered_reviews['title'].value_counts().head(3).index
 
     # Build and return dictionary
-        return [{"Puesto {}".format(i+1): game} for i, game in enumerate(top_games)]
+        return [{"{}° place".format(i+1): game} for i, game in enumerate(top_games)]
         
     else:
-        return f"No se encontraron juegos para el año ingresado: '{año}'"
+        return f"No games found for the year entered: '{year}'"
     
 
-def UsersWorstDeveloper( año : int ):
+def UsersWorstDeveloper( year : int ):
     """
     Identifies the top 3 developer with the less recommended games for a given year.
 
@@ -129,8 +127,8 @@ def UsersWorstDeveloper( año : int ):
     """
 
     # Ensure proper data types
-    if not isinstance(año, int):
-        raise TypeError(f"Expected 'año' to be an integer, got {type(año)}.")
+    if not isinstance(year, int):
+        raise TypeError(f"Expected 'year' to be an integer, got {type(year)}.")
 
     # Filter the users_reviews DataFrame for the given year, where the recommendations are False and the sentiment_analysis is 0
     filtered_developers = users_reviews.query("Year == @año and recommend == False and sentiment_analysis == 0")
@@ -141,13 +139,13 @@ def UsersWorstDeveloper( año : int ):
         worst_developers = filtered_developers['developer'].value_counts().head(3).index
 
     # Build and return dictionary
-        return [{"Puesto {}".format(i+1): developer} for i, developer in enumerate(worst_developers)]
+        return [{"{}° place".format(i+1): developer} for i, developer in enumerate(worst_developers)]
         
     else:
-        return f"No se encontraron desarrolladores para el año ingresado: '{año}'"
+        return f"No developers found for the year entered: '{year}'"
     
 
-def sentiment_analysis( empresa_desarrolladora : str ):
+def sentiment_analysis( developer_company : str ):
     """
     Count the number of negative, neutral, and positive reviews clasified by a previous sentiment analysis for the specified developer.
 
@@ -159,11 +157,11 @@ def sentiment_analysis( empresa_desarrolladora : str ):
     """
 
     # Ensure proper data types
-    if not isinstance(empresa_desarrolladora, str):
-        raise TypeError(f"Expected 'empresa_desarrolladora' to be a string, got {type(empresa_desarrolladora)}.")
+    if not isinstance(developer_company, str):
+        raise TypeError(f"Expected 'developer_company' to be a string, got {type(developer_company)}.")
 
     # Case-insensitive developer search
-    developer = empresa_desarrolladora.lower()
+    developer = developer_company.lower()
     reviews_for_developer = users_reviews[users_reviews["developer"].str.lower() == developer]
 
     # Check for empty results
@@ -172,14 +170,14 @@ def sentiment_analysis( empresa_desarrolladora : str ):
         sentiment_counts = reviews_for_developer['sentiment_analysis'].value_counts().to_dict()
 
         # Crear el diccionario con el formato deseado
-        return {empresa_desarrolladora: {
+        return {developer_company: {
             'Negative': sentiment_counts.get(0, 0),
             'Neutral': sentiment_counts.get(1, 0),
             'Positive': sentiment_counts.get(2, 0)
         }}
 
     else:
-        return f"No se encontro la empresa desarrolladora ingresada: '{empresa_desarrolladora}'"
+        return f"No developers found for the year entered: '{developer_company}'"
     
 
 def game_recommendations( item_id : int ):
@@ -199,7 +197,7 @@ def game_recommendations( item_id : int ):
 
     # Check if item_id is in the data to be analyzed
     if item_id not in df_games['item_id'].values:
-        return {'error': 'Item_id not found in the data to be analyzed.'}
+        return {'error': 'item_id not found in the database.'}
 
     # Find the index of the game in the DataFrame based on the item_id
     game_info = df_games[df_games['item_id'] == item_id]
