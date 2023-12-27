@@ -1,10 +1,14 @@
 from fastapi import FastAPI, HTTPException
 from fastapi.responses import HTMLResponse
+from fastapi.staticfiles import StaticFiles
 
 # Import your functions from functions.py
 from functions import PlayTimeGenre, UserForGenre, UsersRecommend, UsersWorstDeveloper, sentiment_analysis, game_recommendations
 
 app = FastAPI()
+
+# Serve static files 
+app.mount("/", StaticFiles(directory="", html=True), name="static")
 
 # Index
 @app.get("/", response_class=HTMLResponse)
@@ -14,6 +18,7 @@ async def index():
     <html>
         <head>
             <title>Steam Query API</title>
+            <link rel="icon" type="image/vnd.microsoft.icon" href="/favicon.ico">
             <style>
                 body {
                     font-family: Arial, sans-serif;
