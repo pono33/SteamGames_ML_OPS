@@ -38,7 +38,7 @@ def PlayTimeGenre( genre : str ):
 
         # Build and return dictionary
         return {
-            f"Release year with the most hours played for Genre {genre.capitalize()}": max_playtime_year
+            f"Release year with the most hours played for Genre {genre.capitalize()}": int(max_playtime_year)
         }
     else:
         return f"No Year was found in which the Genre '{genre.capitalize()}' was played"
