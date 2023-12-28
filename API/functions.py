@@ -1,9 +1,11 @@
+# funcionando
 import pandas as pd
 import joblib
 from sklearn.compose import ColumnTransformer
 from sklearn.feature_extraction.text import TfidfVectorizer
 from sklearn.neighbors import NearestNeighbors
 from sklearn.pipeline import Pipeline
+import concurrent.futures
 
 # Datasets import
 from data import playtime_genre, users_reviews, df_games
@@ -25,52 +27,9 @@ def find_max_playtime(data, column):
     Find the item with the maximum playtime for a specific column.
     """
     if not data.empty:
-        return data.groupby(column)["playtime"].sum().idxmax()
+        return data.groupby(column)["playtime"].sum().idxmax()   
 
-# API Functions:    
-
-def PlayTimeGenre( genre : str ):
-    """
-    Finds the year with the most hours played for a specific genre, ignoring case and checking data types.
-
-    Args:
-        genre: The genre to search for (str).
-
-    Returns:
-        A dictionary with information about the genre and the year in wich was most played.
-    """
-    
-    # Ensure proper data types
-    if not isinstance(genre, str):
-        raise TypeError(f"Expected 'genre' to be a string, got {type(genre)}.")
-
-    # Case-insensitive genre search
-    filtered_playtime = playtime_genre[playtime_genre["genre"].str.lower() == genre.lower()]
-
-    # Check for empty results
-    if not filtered_playtime.empty:
-        # Find year with most playtime
-        max_playtime_year = filtered_playtime.groupby("year")["playtime"].sum().idxmax()
-
-        # Build and return dictionary
-        return {
-            f"Release year with the most hours played for Genre {genre.capitalize()}": max_playtime_year
-        }
-    else:
-        return f"No Year was found in which the Genre '{genre.capitalize()}' was played"
-    
-
-def UserForGenre( genre : str ):
-    """
-    Finds the user with the most hours played for a specific genre, ignoring case and checking data types.
-
-    Args:
-        genre: The genre to search for (str).
-
-    Returns:
-        A dictionary with information about the user and their playtime.
-    """
-
+def process_user_genre(genre):
     filtered_playtime = filter_playtime_by_genre(genre)
     
     if filtered_playtime.empty:
@@ -90,7 +49,33 @@ def UserForGenre( genre : str ):
         (f"User with highest playtime hours {genre.capitalize()}", max_playtime_user),
         ("Playtime Hours", yearly_hour_accumulation),
     )
+
+def process_genre(genre):
+    filtered_playtime = filter_playtime_by_genre(genre)
     
+    if filtered_playtime.empty:
+        return f"No Year was found in which the Genre '{genre.capitalize()}' was played"
+
+    max_playtime_year = find_max_playtime(filtered_playtime, "year")
+
+    return dict(
+        (f"Release year with the most hours played for Genre {genre.capitalize()}", max_playtime_year),
+    )
+
+
+# API Functions: 
+
+def PlayTimeGenre(genre):
+    with concurrent.futures.ThreadPoolExecutor() as executor:
+        result = list(executor.map(process_genre, [genre]))
+
+    return result[0]
+
+def UserForGenre(genre):
+    with concurrent.futures.ThreadPoolExecutor() as executor:
+        result = list(executor.map(process_user_genre, [genre]))
+
+    return result[0]
     
 def UsersRecommend( year : int ):
     """
@@ -149,7 +134,7 @@ def UsersWorstDeveloper( year : int ):
         return [{"{}° place".format(i+1): developer} for i, developer in enumerate(worst_developers)]
         
     else:
-        return f"No developers rated found in: '{year}'(Current information available includes recommendations between 2010 and 2015)"
+        return f"No reviewed games found in: '{year}'(Current information available includes recommendations between 2010 and 2015)"
     
 
 def sentiment_analysis( developer_company : str ):
