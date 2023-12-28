@@ -11,22 +11,6 @@ from data import playtime_genre, users_reviews, df_games
 # Model import
 pipeline = joblib.load('recommendation_model.joblib')
 
-# Auxiliar functions:
-def filter_playtime_by_genre(genre):
-    """
-    Case-insensitive genre search and data type validation.
-    """
-    if not isinstance(genre, str):
-        raise TypeError(f"Expected 'genre' to be a string, got {type(genre)}.")
-    return playtime_genre[playtime_genre["genre"].str.lower() == genre.lower()]
-
-def find_max_playtime(data, column):
-    """
-    Find the item with the maximum playtime for a specific column.
-    """
-    if not data.empty:
-        return data.groupby(column)["playtime"].sum().idxmax()
-
 # API Functions:    
 
 def PlayTimeGenre( genre : str ):
@@ -71,25 +55,34 @@ def UserForGenre( genre : str ):
         A dictionary with information about the user and their playtime.
     """
 
-    filtered_playtime = filter_playtime_by_genre(genre)
-    
-    if filtered_playtime.empty:
+    # Ensure proper data types
+    if not isinstance(genre, str):
+        raise TypeError(f"Expected 'genre' to be a string, got {type(genre)}.")
+
+    # Case-insensitive genre search
+    filtered_playtime = playtime_genre[playtime_genre["genre"].str.lower() == genre.lower()]
+
+    # Check for empty results
+    if not filtered_playtime.empty:
+        # Find user with most playtime
+        max_playtime_user = filtered_playtime.groupby("user_id")["playtime"].sum().idxmax()
+
+        # Get year-wise playtime accumulation
+        yearly_hour_accumulation = (
+            filtered_playtime[filtered_playtime["user_id"] == max_playtime_user]
+            .groupby("year")["playtime"]
+            .sum()
+            .reset_index()
+            .to_dict(orient="records")
+        )
+
+        # Build and return dictionary
+        return {
+            f"User with highiest playtime hours {genre.capitalize()}": max_playtime_user,
+            "Playtime Hours": yearly_hour_accumulation,
+        }
+    else:
         return f"No Year was found in which the Genre '{genre.capitalize()}' was played"
-
-    max_playtime_user = find_max_playtime(filtered_playtime, "user_id")
-
-    yearly_hour_accumulation = (
-        filtered_playtime[filtered_playtime["user_id"] == max_playtime_user]
-        .groupby("year")["playtime"]
-        .sum()
-        .reset_index()
-        .to_dict(orient="records")
-    )
-
-    return dict(
-        (f"User with highest playtime hours {genre.capitalize()}", max_playtime_user),
-        ("Playtime Hours", yearly_hour_accumulation),
-    )
     
     
 def UsersRecommend( year : int ):
@@ -97,7 +90,7 @@ def UsersRecommend( year : int ):
     Identifies the top 3 recommended games for a given year.
 
     Args:
-        año: The year to search for (int).
+        year: The year to search for (int).
 
     Returns:
         A dictionary with information about the 3 top games.
@@ -149,7 +142,7 @@ def UsersWorstDeveloper( year : int ):
         return [{"{}° place".format(i+1): developer} for i, developer in enumerate(worst_developers)]
         
     else:
-        return f"No reviewed games found in: '{year}'(Current information available includes recommendations between 2010 and 2015)"
+        return f"No developers found for the year entered: '{year}'"
     
 
 def sentiment_analysis( developer_company : str ):
