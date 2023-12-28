@@ -127,7 +127,7 @@ def UsersWorstDeveloper( year : int ):
     Identifies the top 3 developer with the less recommended games for a given year.
 
     Args:
-        año: The year to search for (int).
+        year: The year to search for (int).
 
     Returns:
         A dictionary with information about the 3 worst developers.
@@ -138,7 +138,7 @@ def UsersWorstDeveloper( year : int ):
         raise TypeError(f"Expected 'year' to be an integer, got {type(year)}.")
 
     # Filter the users_reviews DataFrame for the given year, where the recommendations are False and the sentiment_analysis is 0
-    filtered_developers = users_reviews.query("year == @año and recommend == False and sentiment_analysis == 0")
+    filtered_developers = users_reviews.query("year == @year and recommend == False and sentiment_analysis == 0")
     
     # Check for empty results
     if not filtered_developers.empty:
