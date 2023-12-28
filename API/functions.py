@@ -149,7 +149,9 @@ def UsersWorstDeveloper( year : int ):
         return [{"{}° place".format(i+1): developer} for i, developer in enumerate(worst_developers)]
         
     else:
-        return f"No developers found for the year entered: '{year}'"
+        return f"""No developers rated found in: '{year}'.
+        Current information includes recommendations between 2010 and 2015
+        """
     
 
 def sentiment_analysis( developer_company : str ):
