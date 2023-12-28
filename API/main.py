@@ -1,6 +1,5 @@
 from fastapi import FastAPI, HTTPException
 from fastapi.responses import HTMLResponse
-from fastapi.staticfiles import StaticFiles
 from fastapi.openapi.models import OAuthFlows as OAuthFlowsModel
 from fastapi.openapi.models import OAuthFlowAuthorizationCode
 
@@ -8,9 +7,6 @@ from fastapi.openapi.models import OAuthFlowAuthorizationCode
 from functions import PlayTimeGenre, UserForGenre, UsersRecommend, UsersWorstDeveloper, sentiment_analysis, game_recommendations
 
 app = FastAPI()
-
-# Serve static files
-app.mount("/", StaticFiles(directory="", html=True), name="static")
 
 # Index
 @app.get("/", response_class=HTMLResponse)
@@ -20,7 +16,6 @@ async def index():
     <html>
         <head>
             <title>Steam Query API</title>
-            <link rel="icon" type="image/vnd.microsoft.icon" href="/favicon.ico">
             <!-- Swagger UI -->
             <link rel="stylesheet" href="https://unpkg.com/swagger-ui-dist@3.49.0/swagger-ui.css" />
             <!-- ReDoc -->
