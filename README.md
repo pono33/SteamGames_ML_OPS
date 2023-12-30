@@ -4,7 +4,7 @@ SteamGames ML OPS is one of the final integrative projects of the Henry Data-Sci
 
 # Directory Details
 
-- **API/** Contains files related to the implementation of API endpoints for data consumption. 
+- **API/** Contains files related to the implementation of API endpoints for data consumption. For a detailed description of the API and its implementation, please refer to the [API README](https://github.com/pono33/SteamGames_ML_OPS/blob/master/API/README.md).
 
 - **datasets/**
   _The datasets folder is divided into two subfolders_
