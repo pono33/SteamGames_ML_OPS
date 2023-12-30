@@ -80,7 +80,7 @@ The raw user reviews data is loaded from the compressed JSON file ('user_reviews
 The final processed DataFrame from the **User_Reviews** section is exported re exported to the 'datasets/processed' directory in Parquet format for further analysis.
 
 
-# ETL Process: User Items
+# User Items
 
 This section of the ETL process focuses on handling the raw user/items data. The script extracts, transforms, and loads the data to create two processed datasets: `users.parquet` and `items.parquet`.
 
