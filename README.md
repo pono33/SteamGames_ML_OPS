@@ -77,8 +77,68 @@ The raw user reviews data is loaded from the compressed JSON file ('user_reviews
 
 ### Load
 
-The final processed DataFrame from the **User_Reviews** section is exported in Parquet format for further analysis.
+The final processed DataFrame from the **User_Reviews** section is exported re exported to the 'datasets/processed' directory in Parquet format for further analysis.
 
+
+# ETL Process: User Items
+
+This section of the ETL process focuses on handling the raw user/items data. The script extracts, transforms, and loads the data to create two processed datasets: `users.parquet` and `items.parquet`.
+
+### Extract
+
+The raw user items data is loaded from the compressed JSON file ('users_items.json.gz'). Each line is converted to a dictionary using `ast.literal_eval`, and the resulting dictionaries are stored in a list.
+
+### Transform
+
+1. A DataFrame, `df_users_items`, is created from the list of dictionaries.
+2. The 'steam_id' column is converted to integers.
+3. Duplicate rows based on all columns except the last one are removed.
+4. Records where 'items_count' is '0' (users who don't own any games) are filtered and removed.
+5. The 'items' column, which contains lists of dictionaries, is transformed into a separate DataFrame, `df_items`.
+6. The 'user_id' column is replicated according to the 'items_count' value.
+7. The 'user_id_replicated' column is added to the 'df_items' DataFrame.
+8. The 'item_id' column is converted to integers.
+9. Columns are renamed for clarity.
+10. Unnecessary columns ('playtime_2weeks') are removed from the 'df_items' DataFrame.
+11. The 'items' column is dropped from the `df_users_items` DataFrame.
+
+The `df_users` DataFrame provides information about users, including their unique identifier, the count of items they own, Steam identifier, and associated user URL. On the other hand, the `df_items` DataFrame contains details about the items, such as the associated user identifier, unique item identifier, item name, and playtime in minutes.
+
+### Load
+
+Two processed datasets, `users.parquet` and `items.parquet`, are exported to the 'datasets/processed' directory in Parquet format.
+
+
+# Games
+
+This section of the ETL process is dedicated to handling the raw games data. The script extracts, transforms, and loads the data to create a processed dataset named `games.parquet`.
+
+### Extract
+
+The raw games data is loaded from the compressed JSON file ('steam_games.json.gz'). Each line, representing a game, is converted from a JSON string to a Python dictionary using the `json.loads` function. The resulting dictionaries are stored in a list, `games_row`.
+
+### Transform
+
+1. A DataFrame, `df_games`, is created from the list of dictionaries.
+2. Rows with all missing values are dropped.
+3. The 'release_date' column is converted to datetime format, and the 'release_year' column is extracted.
+4. Unnecessary columns ('specs', 'early_access', 'price') are removed.
+5. Missing values in 'title', 'developer', 'genre' and 'release_year' are filled using web scraping with a custom `WebScraper` class.
+7. Missing values in 'developer' are imputed with values from 'publisher'.
+8. Missing values in 'title' are imputed with values from 'app_name'.
+9. Missing the most relevant values in 'genres' are imputed with values from 'tags'.
+10. Rows with missing values in the 'id' column are removed.
+11. Missing values in 'genres' are imputed with the string 'unknown'.
+12. Missing values in 'developer' are imputed with the string 'unknown'.
+13. Missing values in 'release_year' are imputed with the rounded mean of existing values.
+14. The most relevant genre for each record is determined based on genre frequency distribution.
+15. Columns are renamed for clarity.
+16. The 'item_id' column is converted to integers.
+17. The 'release_year' column is converted to integers.
+
+### Load
+
+The processed dataset, `games.parquet`, is exported to the 'datasets/processed' directory in Parquet format.
 
 
 # Game Recommendation System
