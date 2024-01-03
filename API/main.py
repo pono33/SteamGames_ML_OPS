@@ -32,6 +32,7 @@ async def index():
                 li {
                     width: 50%;
                     text-align: center;
+                    margin-left: 100px;
                     margin-bottom: 20px;
                     font-family: Arial, sans-serif;
                     font-weight: bold;
@@ -43,7 +44,7 @@ async def index():
                 }
 
                 label {
-                    margin-bottom: 5px;
+                    margin-bottom: 7px;
                 }
             </style>
         </head>
