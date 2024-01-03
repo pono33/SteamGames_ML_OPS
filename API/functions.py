@@ -186,14 +186,14 @@ def game_recommendations( item_id : int ):
     by employing a K-nearest neighbors approach after transforming the input data.
 
     Args:
-        item_id: from the game of wich we want to get recommendations based on (6 digits int).
+        item_id: from the game of wich we want to get recommendations based on an integer.
 
     Returns: 
         The generated dictionary of recommendations.
     '''
     # Ensure proper data types
-    if not isinstance(item_id, int) or not (000000 <= item_id <= 999999):
-        raise TypeError(f"Expected 'item_id' to be an 6-digit integer, got {type(item_id)}.")
+    if not isinstance(item_id, int):
+        raise TypeError(f"Expected 'item_id' to be an integer, got {type(item_id)}.")
 
     # Check if item_id is in the data to be analyzed
     if item_id not in df_games['item_id'].values:

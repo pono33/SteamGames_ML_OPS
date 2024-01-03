@@ -52,42 +52,42 @@ async def index():
             <ul>
                 <li>
                     <form action="/playtime_genre" method="get">
-                        <label for="genre">playtime_genre:</label>
+                        <label for="genre">playtime_genre:      </label>
                         <input type="text" id="genre" name="genre" required placeholder="Genre">
                         <input type="submit" value="Submit">
                     </form>
                 </li>
                 <li>
                     <form action="/user_for_genre" method="get">
-                        <label for="genre">user_for_genre:</label>
+                        <label for="genre">user_for_genre:      </label>
                         <input type="text" id="genre" name="genre" required placeholder="Genre">
                         <input type="submit" value="Submit">
                     </form>
                 </li>
                 <li>
                     <form action="/users_recommend" method="get">
-                        <label for="year">users_recommend:</label>
+                        <label for="year">users_recommend:     </label>
                         <input type="number" id="year" name="year" required placeholder="Year">
                         <input type="submit" value="Submit">
                     </form>
                 </li>
                 <li>
                     <form action="/users_worst_developer" method="get">
-                        <label for="year">users_worst_developer:</label>
+                        <label for="year">users_worst_developer:    </label>
                         <input type="number" id="year" name="year" required placeholder="Year">
                         <input type="submit" value="Submit">
                     </form>
                 </li>
                 <li>
                     <form action="/sentiment_analysis" method="get">
-                        <label for="developer_company">sentiment_analysis:</label>
+                        <label for="developer_company">sentiment_analysis:    </label>
                         <input type="text" id="developer_company" name="developer_company" required placeholder="Developer Company">
                         <input type="submit" value="Submit">
                     </form>
                 </li>
                 <li>
                     <form action="/game_recommendations" method="get">
-                        <label for="item_id">game_recommendations:</label>
+                        <label for="item_id">game_recommendations:   </label>
                         <input type="text" id="item_id" name="item_id" required placeholder="Item_id">
                         <input type="submit" value="Submit">
                     </form>
