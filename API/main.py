@@ -30,16 +30,16 @@ async def index():
                 }
 
                 li {
-                    width: 50%;
+                    width: 100%;
                     text-align: center;
-                    margin-left: 40%;
                     margin-bottom: 20px;
                     font-family: Arial, sans-serif;
                     font-weight: bold;
                 }
 
-                input {
-                    margin-right: 25%;
+                form {
+                    display: flex;
+                    align-items: center;
                 }
 
                 label {
