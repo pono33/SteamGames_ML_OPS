@@ -32,15 +32,14 @@ async def index():
                 li {
                     width: 50%;
                     text-align: center;
-                    margin-left: 100px;
+                    margin-left: 40%;
                     margin-bottom: 20px;
                     font-family: Arial, sans-serif;
                     font-weight: bold;
                 }
 
                 form {
-                    display: flex;
-                    align-items: center;
+                    margin-right: 25%;
                 }
 
                 label {
