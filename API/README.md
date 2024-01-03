@@ -5,7 +5,7 @@ Welcome to the Steam Games Querys API project! This API is designed to provide s
 Access my [Steam Games Querys API](https://steam-games-querys.onrender.com)
 
 # Directory Details
-- **datasets_API:** Contains Parquet files for game data.
+- **datasets_API/** Contains Parquet files for game data.
 - **init.py:** Initialization file for Python package.
 - **data.py:** Module for loading datasets into Pandas DataFrames.
 - **functions.py:** Module containing API functions for querying data.
