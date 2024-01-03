@@ -29,7 +29,7 @@ async def index():
                 }
 
                 li {
-                    width: 50%;
+                    width: 35%;
                     text-align: center;
                     margin-bottom: 20px;
                     font-family: Arial, sans-serif;
@@ -43,6 +43,7 @@ async def index():
                 }
 
                 .my-form label {
+                    margin-right: 20%
                     margin-bottom: 7px;
                 }
 
