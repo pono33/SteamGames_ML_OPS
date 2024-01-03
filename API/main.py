@@ -29,7 +29,7 @@ async def index():
                 }
 
                 li {
-                    width: 60%;
+                    width: 100%;
                     text-align: center;
                     margin-bottom: 20px;
                     font-family: Arial, sans-serif;
@@ -51,8 +51,12 @@ async def index():
                 }
 
                 .my-form input[type="text"],
+                .my-form input[type="number"] {
+                    margin-right: 35%;
+                }
+                
                 .my-form input[type="submit"] {
-                    margin-left: auto;
+                    margin-right: 25%;
                 }
 
             </style>
