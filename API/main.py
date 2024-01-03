@@ -26,7 +26,6 @@ async def index():
                 ul {
                     list-style-type: none;
                     padding: 0;
-                    text-align: center;
                 }
 
                 li {
@@ -40,6 +39,7 @@ async def index():
                 form {
                     display: flex;
                     align-items: center;
+                    justify-content: center;
                 }
 
                 label {
