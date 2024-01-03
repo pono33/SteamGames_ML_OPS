@@ -38,7 +38,7 @@ async def index():
                     font-weight: bold;
                 }
 
-                form {
+                input {
                     margin-right: 25%;
                 }
 
