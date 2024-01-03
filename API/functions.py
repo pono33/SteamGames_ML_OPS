@@ -38,7 +38,7 @@ def PlayTimeGenre( genre : str ):
 
         # Build and return dictionary
         return {
-            f"Release year with the most hours played for Genre {genre.capitalize()}": int(max_playtime_year)
+            f"Release year with the most hours played for Genre '{genre.capitalize()}'": int(max_playtime_year)
         }
     else:
         return f"No Year was found in which the Genre '{genre.capitalize()}' was played"
@@ -78,7 +78,7 @@ def UserForGenre( genre : str ):
 
         # Build and return dictionary
         return {
-            f"User with highiest playtime hours {genre.capitalize()}": max_playtime_user,
+            f"User with highiest playtime hours '{genre.capitalize()}'": max_playtime_user,
             "Playtime Hours": yearly_hour_accumulation,
         }
     else:
