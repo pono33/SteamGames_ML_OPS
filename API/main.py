@@ -30,9 +30,9 @@ async def index():
                 }
 
                 li {
-                    display: inline-block;
-                    margin: 10px; /* Ajusta según sea necesario */
-                    text-align: left;
+                    width: 100%;
+                    text-align: center;
+                    margin-bottom: 20px;
                 }
 
                 form {
