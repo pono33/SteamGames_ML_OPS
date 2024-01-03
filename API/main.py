@@ -36,57 +36,67 @@ async def index():
                     font-weight: bold;
                 }
 
-                form {
+                .my-form {
                     display: flex;
                     align-items: center;
                     justify-content: center;
                 }
 
-                label {
+                .my-form label {
                     margin-bottom: 7px;
                 }
+
+                .my-form .form-inputs {
+                    margin-left: auto;
+                }
+
+                .my-form input[type="text"],
+                .my-form input[type="submit"] {
+                    margin-left: auto;
+                }
+                
             </style>
         </head>
         <body>
             <h1>Steam Platform Game Query API</h1>
             <ul>
                 <li>
-                    <form action="/playtime_genre" method="get">
+                    <form action="/playtime_genre" method="get" class="my-form">
                         <label for="genre">playtime_genre:</label>
                         <input type="text" id="genre" name="genre" required placeholder="Genre">
                         <input type="submit" value="Submit">
                     </form>
                 </li>
                 <li>
-                    <form action="/user_for_genre" method="get">
+                    <form action="/user_for_genre" method="get" class="my-form">
                         <label for="genre">user_for_genre:</label>
                         <input type="text" id="genre" name="genre" required placeholder="Genre">
                         <input type="submit" value="Submit">
                     </form>
                 </li>
                 <li>
-                    <form action="/users_recommend" method="get">
+                    <form action="/users_recommend" method="get" class="my-form">
                         <label for="year">users_recommend:</label>
                         <input type="number" id="year" name="year" required placeholder="Year">
                         <input type="submit" value="Submit">
                     </form>
                 </li>
                 <li>
-                    <form action="/users_worst_developer" method="get">
+                    <form action="/users_worst_developer" method="get" class="my-form">
                         <label for="year">users_worst_developer:</label>
                         <input type="number" id="year" name="year" required placeholder="Year">
                         <input type="submit" value="Submit">
                     </form>
                 </li>
                 <li>
-                    <form action="/sentiment_analysis" method="get">
+                    <form action="/sentiment_analysis" method="get" class="my-form">
                         <label for="developer_company">sentiment_analysis:</label>
                         <input type="text" id="developer_company" name="developer_company" required placeholder="Developer Company">
                         <input type="submit" value="Submit">
                     </form>
                 </li>
                 <li>
-                    <form action="/game_recommendations" method="get">
+                    <form action="/game_recommendations" method="get" class="my-form">
                         <label for="item_id">game_recommendations:</label>
                         <input type="text" id="item_id" name="item_id" required placeholder="Item_id">
                         <input type="submit" value="Submit">
