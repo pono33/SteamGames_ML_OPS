@@ -177,7 +177,7 @@ def sentiment_analysis( developer_company : str ):
         }}
 
     else:
-        return f"No developers found for the year entered: '{developer_company}'"
+        return f"No reviews found for '{developer_company}' company"
     
 
 def game_recommendations( item_id : int ):

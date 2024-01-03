@@ -23,17 +23,31 @@ async def index():
                     color: #333;
                     text-align: center;
                 }
-                p {
-                    color: #666;
+                ul {
+                    list-style-type: none;
+                    padding: 0;
                     text-align: center;
-                    font-size: 18px;
-                    margin-top: 20px;
+                }
+
+                li {
+                    display: inline-block;
+                    margin: 10px; /* Ajusta según sea necesario */
+                    text-align: left;
+                }
+
+                form {
+                    display: flex;
+                    flex-direction: column;
+                    align-items: center;
+                }
+
+                label {
+                    margin-bottom: 5px;
                 }
             </style>
         </head>
         <body>
             <h1>Steam Platform Game Query API</h1>
-            <p>This tool that can be used by game developers to improve their games, by game publishers to track their sales, and by gamers to find new games to play.<p>
             <ul>
                 <li>
                     <form action="/playtime_genre" method="get">
