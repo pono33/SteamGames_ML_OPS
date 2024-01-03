@@ -36,9 +36,9 @@ async def index():
             <p>This tool that can be used by game developers to improve their games, by game publishers to track their sales, and by gamers to find new games to play.<p>
             <ul>
                 <li>
-                    <form action="/playtime_genre/{genre}" method="get">
+                    <form action="/playtime_genre" method="get">
                         <label for="genre">playtime_genre:</label>
-                        <input type="text" id="genre" name="genre" required>
+                        <input type="text" id="genre" name="genre" required value="Genre">
                         <input type="submit" value="Submit">
                     </form>
                 </li>
@@ -50,7 +50,7 @@ async def index():
 
 # API endpoints
 
-@app.get("/playtime_genre/{genre}")
+@app.get("/playtime_genre")
 async def read_playtime_genre(genre: str):
     try:
         result = PlayTimeGenre(genre)
