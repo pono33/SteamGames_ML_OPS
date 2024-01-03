@@ -43,7 +43,7 @@ async def index():
                 }
 
                 .my-form label {
-                    margin-right: 20%
+                    margin-right: 20%;
                     margin-bottom: 7px;
                 }
 
