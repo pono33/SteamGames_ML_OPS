@@ -33,11 +33,12 @@ async def index():
                     width: 100%;
                     text-align: center;
                     margin-bottom: 20px;
+                    font-family: Arial, sans-serif;
+                    font-weight: bold;
                 }
 
                 form {
                     display: flex;
-                    flex-direction: column;
                     align-items: center;
                 }
 
