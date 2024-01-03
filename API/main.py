@@ -34,6 +34,15 @@ async def index():
         <body>
             <h1>Steam Platform Game Query API</h1>
             <p>This tool that can be used by game developers to improve their games, by game publishers to track their sales, and by gamers to find new games to play.<p>
+            <ul>
+                <li>
+                    <form action="/playtime_genre" method="get">
+                        <label for="genre">Genre:</label>
+                        <input type="text" id="genre" name="genre" required>
+                        <input type="submit" value="Submit">
+                    </form>
+                </li>
+            </ul>
         </body>
     </html>
     """
