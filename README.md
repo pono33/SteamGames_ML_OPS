@@ -48,7 +48,7 @@ _The raw subfolder includes the Steam datasets provided by Henry for analysis, w
 
 This ETL (Extract, Transform, Load) script focuses on processing and transforming the raw data, performing sentiment analysis and web-scrapping. The process is divided into three main sections: **User_Reviews**, **User_items** and **Games**.
 
-### User Reviews and Sentiment Analysis
+## User Reviews and Sentiment Analysis
 
 #### Extract
 
@@ -80,7 +80,7 @@ The raw user reviews data is loaded from the compressed JSON file ('user_reviews
 The final processed DataFrame from the **User_Reviews** section is exported re exported to the 'datasets/processed' directory in Parquet format for further analysis.
 
 
-# User Items
+## User Items
 
 This section of the ETL process focuses on handling the raw user/items data. The script extracts, transforms, and loads the data to create two processed datasets: `users.parquet` and `items.parquet`.
 
@@ -109,7 +109,7 @@ The `df_users` DataFrame provides information about users, including their uniqu
 Two processed datasets, `users.parquet` and `items.parquet`, are exported to the 'datasets/processed' directory in Parquet format.
 
 
-# Games
+## Games
 
 This section of the ETL process is dedicated to handling the raw games data. The script extracts, transforms, and loads the data to create a processed dataset named `games.parquet`.
 
@@ -140,6 +140,11 @@ The raw games data is loaded from the compressed JSON file ('steam_games.json.gz
 
 The processed dataset, `games.parquet`, is exported to the 'datasets/processed' directory in Parquet format.
 
+# EDA Process
+
+This exploratory data analysis (EDA) focuses on the datasets resulting from the ETL process: games.parquet, items.parquet, reviews.parquet, and user.parquet. The primary goal is to identify key features for the development of a games recommendation model. Subsequently, the analysis involves merging necessary features from different datasets and optimizing object types to enhance memory usage efficiency. The end objective is to deploy a RESTful API  housing all necessary data for both powering the recommendation model and facilitating specific queries to the datasets.
+
+Overall, the EDA script meticulously addresses each dataset, employing systematic techniques to optimize memory usage while retaining crucial information. More detailed analysis description in the EDA script
 
 # Game Recommendation System
 
